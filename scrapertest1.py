@@ -34,13 +34,38 @@ for link in links_:
     links.append(link_)
 
 for page in links[1:]:
-    sleep(3)
+    sleep(1)
     response_page = requests.get(page, headers)
     soup_page = BeautifulSoup(response_page.text, "lxml")
     data_page = soup_page.find("form", class_="form-horizontal")
     counter_el = int(data_page.find("strong").text)
+    print(page, "   :  ", counter_el, " : ", counter_pages(counter_el))
 
-    print(counter_el, " : ", counter_pages(counter_el))
+url_page7 = "https://books.toscrape.com/catalogue/category/books/default_15/index.html"
+
+for i in range(1, 9):
+    if i == 1:
+        response_page7 = requests.get(url_page7, headers)
+        soup_page7 = BeautifulSoup(response_page7.text, "lxml")
+        data_page7 = soup_page7.find_all("article", class_="product_pod")
+
+        for el in data_page7:
+            image_src = el.find("img").get("src")
+            index_image_src = image_src.rfind("..") + 3
+            image_src_full = root_url + image_src[index_image_src:]
+            print(image_src_full)
+        print("--------------------------------------------------------------")
+    else:
+        url_page7 = f"https://books.toscrape.com/catalogue/category/books/default_15/page-{i}.html"
+        soup_page7 = BeautifulSoup(response_page7.text, "lxml")
+        data_page7 = soup.find_all("article", class_="product_pod")
+
+        for el in data_page7:
+            image_src = el.find("img").get("src")
+            index_image_src = image_src.rfind("..") + 3
+            image_src_full = root_url + image_src[index_image_src:]
+            print(image_src_full)
+        print("--------------------------------------------------------------")
 # print(links[1:])
 
 # data = soup.find_all("article", class_="product_pod")
