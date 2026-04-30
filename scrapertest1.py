@@ -2,6 +2,13 @@ from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
+from openpyxl import Workbook
+
+wb = Workbook()
+sheet = wb.active
+sheet.title = "myqwerty"
+sheet["A1"] = "qwerty"
+wb.save("mytest.xlsx")
 
 
 def counter_pages(n):
